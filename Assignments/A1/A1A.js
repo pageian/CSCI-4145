@@ -22,12 +22,8 @@ app.get('/:jobName/:partId', (req, res) => {
   console.log(jobName + " : " + partId);
   for(i = 0; i < info.length; i++) {
     if(info[i].jobName === jobName && info[i].partId.toString() === partId) {
-      console.log('true');
       qty = info[i].qty;
       break;
-    } else {
-      console.log(info[i].jobName + " != " + jobName);
-      console.log(info[i].partId + " != " + partId);
     }
   }
 
