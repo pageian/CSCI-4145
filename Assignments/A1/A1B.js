@@ -26,27 +26,46 @@ app.get('/:jobName/:partId', (req, res) => {
 
 app.post('/', (req, res) => {
 
-  var recordIndex = findInfoRecord(req.body.jobName, req.body.partId);
+  var job = req.body.jobName;
+  var part = req.body.partId;
+  var quantity = req.body.qty;
 
-  if(recordIndex < 0) {
-    info.push({jobName: req.body.jobName, partId: req.body.partId, qty: req.body.qty});
-    res.send(JSON.stringify(info));
+  if(job !== null && part !== null && quantity !== null) {
+    var recordIndex = findInfoRecord(job, part);
+
+    if(recordIndex < 0) {
+      info.push({jobName: job, partId: part, qty: quantity});
+      res.send(JSON.stringify(info));
+    } else {
+      res.statusCode = 400;
+      res.send('Error: duplicate record');
+    }
+
   } else {
     res.statusCode = 400;
-    res.send('Error: duplicate record');
+    res.send('Error: null arguments');
   }
 });
 
 app.put('/', (req, res) => {
 
-  var recordIndex = findInfoRecord(req.body.jobName, req.body.partId);
+  var job = req.body.jobName;
+  var part = req.body.partId;
+  var quantity = req.body.qty;
 
-  if(recordIndex >= 0) {
-    info[recordIndex].qty = req.body.qty;
-    res.send(JSON.stringify(info));
+  if(job !== null && part !== null && quantity !== null) {
+    var recordIndex = findInfoRecord(req.body.jobName, req.body.partId);
+
+    if(recordIndex >= 0) {
+      info[recordIndex].qty = req.body.qty;
+      res.send(JSON.stringify(info));
+    } else {
+      res.statusCode = 400;
+      res.send('Error: record not found');
+    }
   } else {
     res.statusCode = 400;
-    res.send('Error: record not found');
+    res.send('Error: null arguments');
   }
 });
 

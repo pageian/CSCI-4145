@@ -58,7 +58,6 @@ app.post('/', (req, res) => {
 app.put('/', (req, res) => {
 
   var sql = "UPDATE new_table SET quantity = " + req.body.qty + " WHERE job_name = '" + req.body.jobName + "' AND part_id = " + req.body.partId; 
-  console.log(sql);
   let query = db.query(sql, (err, result) => {
     if(err) {
       res.statusCode = 400;
