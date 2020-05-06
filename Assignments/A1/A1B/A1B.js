@@ -20,7 +20,7 @@ app023.get('/:jobName023/:partId023', (req023, res023) => {
     res023.send(JSON.stringify(info023[recordIndex023]));
   } else {
     res023.statusCode = 400;
-    res023.send('Error: Could not retrieve qty info');
+    res023.send('Error: Could not retrieve record info');
   }
 });
 
