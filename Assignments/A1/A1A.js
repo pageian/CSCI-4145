@@ -1,39 +1,40 @@
-const http = require('http');
-const express = require('express');
+const http023 = require('http');
+const express023 = require('express');
 
-const info = [
-  {jobName: "Job1", partId: 1, qty: 55},
-  {jobName: "Job2", partId: 2, qty: 100},
-  {jobName: "Job3", partId: 3, qty: 200}
+const info023 = [
+  {jobName023: "Job1023", partId023: 1023, qty023: 55},
+  {jobName023: "Job2023", partId023: 2023, qty023: 100},
+  {jobName023: "Job3023", partId023: 3023, qty023: 200}
 ];
 
-const app = express();
+const app023 = express023();
 
-app.get('/all', (req, res) => {
-  res.send(JSON.stringify(info));
-    res.end();
+app023.get('/all023', (req023, res023) => {
+  res023.send(JSON.stringify(info023));
+  res023.end();
 });
 
-app.get('/:jobName/:partId', (req, res) => {
-  var jobName = req.params.jobName;
-  var partId = req.params.partId;
-  var qty = "";
+app023.get('/:jobName023/:partId023', (req023, res023) => {
+  var jobName023 = req023.params.jobName023;
+  var partId023 = req023.params.partId023;
+  var qty023 = "";
 
-  console.log(jobName + " : " + partId);
-  for(i = 0; i < info.length; i++) {
-    if(info[i].jobName === jobName && info[i].partId.toString() === partId) {
-      qty = info[i].qty;
+  console.log(jobName023 + " : " + partId023);
+  for(i = 0; i < info023.length; i++) {
+    if(info023[i].jobName023 === jobName023 && info023[i].partId023.toString() === partId023) {
+      qty023 = info023[i].qty023;
       break;
     }
   }
 
-  if(qty != "") {
-    res.send(JSON.stringify(qty));
+  console.log(qty023);
+  if(qty023 != "") {
+    res023.send(JSON.stringify(qty023));
   } else {
-    res.statusCode = 400;
-    res.send('Error: Could not retrieve qty info');
+    res023.statusCode023 = 400;
+    res023.send('Error: Could not retrieve qty info');
   }
-  res.end;
+  res023.end;
 });
 
-app.listen(3000, () => console.log('Listening on port 3000...'));
+app023.listen(3000, () => console.log('Listening on port 3000...'));
