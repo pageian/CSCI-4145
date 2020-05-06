@@ -1,4 +1,3 @@
-const http = require('http');
 const express = require('express');
 
 const info = [
@@ -12,7 +11,6 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send(JSON.stringify(info));
-    res.end();
 });
 
 app.get('/:jobName/:partId', (req, res) => {
@@ -24,7 +22,6 @@ app.get('/:jobName/:partId', (req, res) => {
     res.statusCode = 400;
     res.send('Error: Could not retrieve qty info');
   }
-  res.end;
 });
 
 app.post('/', (req, res) => {
@@ -38,8 +35,6 @@ app.post('/', (req, res) => {
     res.statusCode = 400;
     res.send('Error: duplicate record');
   }
-
-  res.end();
 });
 
 app.put('/', (req, res) => {
@@ -53,8 +48,6 @@ app.put('/', (req, res) => {
     res.statusCode = 400;
     res.send('Error: record not found');
   }
-
-  res.end();
 });
 
 function findInfoRecord(jobName, partId) {

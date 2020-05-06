@@ -1,72 +1,75 @@
-const http = require('http');
 const express = require('express');
-
-const info = [
-  {jobName: "Job1", partId: 1, qty: 55},
-  {jobName: "Job2", partId: 2, qty: 100},
-  {jobName: "Job3", partId: 3, qty: 200}
-];
-
+const mysql = require('mysql');
 const app = express();
 app.use(express.json());
 
+const db = mysql.createConnection({
+  host: '127.0.0.1',
+  user: 'cunt',
+  password: 'password',
+  post: '3306',
+  database: 'A1C'
+});
+
+db.connect((err) => {
+  if(err) {
+    throw err;
+  }
+  console.log('Mysql connected');
+});
+
 app.get('/', (req, res) => {
-  res.send(JSON.stringify(info));
-    res.end();
+  let sql = 'SELECT * FROM new_table';
+  let query = db.query(sql, (err, records) => {
+    if(err) {
+      res.statusCode = 400;
+      res.send('Error: Could not retrieve record info');
+    }
+    res.send(JSON.stringify(records));
+  });
 });
 
 app.get('/:jobName/:partId', (req, res) => {
-  var recordIndex = findInfoRecord(req.params.jobName, req.params.partId);
-
-  if(recordIndex >= 0) {
-    res.send(JSON.stringify(info[recordIndex]));
-  } else {
-    res.statusCode = 400;
-    res.send('Error: Could not retrieve qty info');
-  }
-  res.end;
+  var sql = "SELECT * FROM new_table WHERE job_name = '" + req.params.jobName + "' AND part_id = " + req.params.partId + " LIMIT 1";
+  let query = db.query(sql, (err, record) => {
+    if(err || record.length === 0) {
+      res.statusCode = 400;
+      res.send('Error: Could not retrieve qty info');
+    } else {
+      res.send(JSON.stringify(record));
+    }  
+  });
 });
 
 app.post('/', (req, res) => {
 
-  var recordIndex = findInfoRecord(req.body.jobName, req.body.partId);
+  var sql = "INSERT INTO new_table VALUES('" + req.body.jobName + "', " + req.body.partId + ", " + req.body.qty + ")";
+  let query = db.query(sql, (err, result) => {
+    if(err) {
+      res.statusCode = 400;
+      res.send("ERROR: " + err.sqlMessage);
+    } else {
+      res.send("Success");
+    }
+  });
 
-  if(recordIndex < 0) {
-    info.push({jobName: req.body.jobName, partId: req.body.partId, qty: req.body.qty});
-    res.send(JSON.stringify(info));
-  } else {
-    res.statusCode = 400;
-    res.send('Error: duplicate record');
-  }
-
-  res.end();
 });
 
 app.put('/', (req, res) => {
 
-  var recordIndex = findInfoRecord(req.body.jobName, req.body.partId);
-
-  if(recordIndex >= 0) {
-    info[recordIndex].qty = req.body.qty;
-    res.send(JSON.stringify(info));
-  } else {
-    res.statusCode = 400;
-    res.send('Error: record not found');
-  }
-
-  res.end();
-});
-
-function findInfoRecord(jobName, partId) {
-  
-  var index = -1;
-  for(i = 0; i < info.length; i++) {
-    if(info[i].jobName === jobName && info[i].partId.toString() === partId.toString()) {
-      index = i;
-      break;
+  var sql = "UPDATE new_table SET quantity = " + req.body.qty + " WHERE job_name = '" + req.body.jobName + "' AND part_id = " + req.body.partId; 
+  console.log(sql);
+  let query = db.query(sql, (err, result) => {
+    if(err) {
+      res.statusCode = 400;
+      res.send("ERROR: " + err.sqlMessage);
+    }else if(result.affectedRows === 0) {
+      res.statusCode = 400;
+      res.send("ERROR: record not found");
+    } else {
+      res.send("Success");
     }
-  }
-  return index;
-}
+  });
+});
 
 app.listen(3000, () => console.log('Listening on port 3000...'));
