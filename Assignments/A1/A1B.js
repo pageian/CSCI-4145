@@ -1,84 +1,84 @@
-const express = require('express');
+const express023 = require('express');
 
-const info = [
-  {jobName: "Job1", partId: 1, qty: 55},
-  {jobName: "Job2", partId: 2, qty: 100},
-  {jobName: "Job3", partId: 3, qty: 200}
+const info023 = [
+  {jobName023: "Job1023", partId023: 1023, qty023: 55},
+  {jobName023: "Job2023", partId023: 2023, qty023: 100},
+  {jobName023: "Job3023", partId023: 3023, qty: 200}
 ];
 
-const app = express();
-app.use(express.json());
+const app023 = express023();
+app023.use(express023.json());
 
-app.get('/', (req, res) => {
-  res.send(JSON.stringify(info));
+app023.get('/', (req023, res023) => {
+  res023.send(JSON.stringify(info023));
 });
 
-app.get('/:jobName/:partId', (req, res) => {
-  var recordIndex = findInfoRecord(req.params.jobName, req.params.partId);
+app023.get('/:jobName023/:partId023', (req023, res023) => {
+  var recordIndex023 = findInfoRecord023(req023.params.jobName023, req023.params.partId023);
 
-  if(recordIndex >= 0) {
-    res.send(JSON.stringify(info[recordIndex]));
+  if(recordIndex023 >= 0) {
+    res023.send(JSON.stringify(info023[recordIndex023]));
   } else {
-    res.statusCode = 400;
-    res.send('Error: Could not retrieve qty info');
+    res023.statusCode = 400;
+    res023.send('Error: Could not retrieve qty info');
   }
 });
 
-app.post('/', (req, res) => {
+app023.post('/', (req023, res023) => {
 
-  var job = req.body.jobName;
-  var part = req.body.partId;
-  var quantity = req.body.qty;
+  var job023 = req023.body.jobName023;
+  var part023 = req023.body.partId023;
+  var quantity023 = req023.body.qty023;
 
-  if(job !== null && part !== null && quantity !== null) {
-    var recordIndex = findInfoRecord(job, part);
+  if(job023 !== null && part023 !== null && quantity023 !== null) {
+    var recordIndex023 = findInfoRecord023(job023, part023);
 
-    if(recordIndex < 0) {
-      info.push({jobName: job, partId: part, qty: quantity});
-      res.send(JSON.stringify(info));
+    if(recordIndex023 < 0) {
+      info023.push({jobName023: job023, partId023: part023, qty023: quantity023});
+      res023.send(JSON.stringify(info023));
     } else {
-      res.statusCode = 400;
-      res.send('Error: duplicate record');
+      res023.statusCode = 400;
+      res023.send('Error: duplicate record');
     }
 
   } else {
-    res.statusCode = 400;
-    res.send('Error: null arguments');
+    res023.statusCode = 400;
+    res023.send('Error: null arguments');
   }
 });
 
-app.put('/', (req, res) => {
+app023.put('/', (req023, res023) => {
 
-  var job = req.body.jobName;
-  var part = req.body.partId;
-  var quantity = req.body.qty;
+  var job023 = req023.body.jobName023;
+  var part023 = req023.body.partId023;
+  var qty023 = req023.body.qty023;
 
-  if(job !== null && part !== null && quantity !== null) {
-    var recordIndex = findInfoRecord(req.body.jobName, req.body.partId);
+  if(job023 !== null && part023 !== null && qty023 !== null) {
+    var recordIndex023 = findInfoRecord023(job023, part023);
 
-    if(recordIndex >= 0) {
-      info[recordIndex].qty = req.body.qty;
-      res.send(JSON.stringify(info));
+    if(recordIndex023 >= 0) {
+      info023[recordIndex023].qty023 = qty023;
+      res023.send(JSON.stringify(info023));
     } else {
-      res.statusCode = 400;
-      res.send('Error: record not found');
+      res023.statusCode = 400;
+      res023.send('Error: record not found');
     }
   } else {
-    res.statusCode = 400;
-    res.send('Error: null arguments');
+    res023.statusCode = 400;
+    res023.send('Error: null arguments');
   }
 });
 
-function findInfoRecord(jobName, partId) {
+function findInfoRecord023(jobName023, partId023) {
   
-  var index = -1;
-  for(i = 0; i < info.length; i++) {
-    if(info[i].jobName === jobName && info[i].partId.toString() === partId.toString()) {
-      index = i;
+  var index023 = -1;
+  for(i = 0; i < info023.length; i++) {
+    if(info023[i].jobName023 === jobName023 && info023[i].partId023.toString() === partId023.toString()) {
+      index023 = i;
       break;
     }
   }
-  return index;
+  return index023;
 }
 
-app.listen(3000, () => console.log('Listening on port 3000...'));
+app023.listen(3000, () => console.log('Listening on port 3000...'));

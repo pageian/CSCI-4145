@@ -9,7 +9,7 @@ const info023 = [
 
 const app023 = express023();
 
-app023.get('/all023', (req023, res023) => {
+app023.get('/', (req023, res023) => {
   res023.send(JSON.stringify(info023));
   res023.end();
 });
@@ -19,7 +19,6 @@ app023.get('/:jobName023/:partId023', (req023, res023) => {
   var partId023 = req023.params.partId023;
   var qty023 = "";
 
-  console.log(jobName023 + " : " + partId023);
   for(i = 0; i < info023.length; i++) {
     if(info023[i].jobName023 === jobName023 && info023[i].partId023.toString() === partId023) {
       qty023 = info023[i].qty023;
@@ -27,7 +26,6 @@ app023.get('/:jobName023/:partId023', (req023, res023) => {
     }
   }
 
-  console.log(qty023);
   if(qty023 != "") {
     res023.send(JSON.stringify(qty023));
   } else {
