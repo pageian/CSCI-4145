@@ -7,11 +7,11 @@ app023.use(bodyParser023.urlencoded({extended: true }));
 app023.use(bodyParser023.json());
 
 const db023 = mysql023.createConnection({
-  host: 'assign-3.cxoioaxyderh.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'password',
+  host: 'in945410.mysql.database.azure.com',
+  user: 'ipage@in945410',
+  password: 'Mon@keys12399',
   port: 3306,
-  database: 'assign3'
+  database: 'assign4'
 });
 
 db023.connect((err023) => {
@@ -22,7 +22,7 @@ db023.connect((err023) => {
 });
 
 app023.get('/', (req023, res023) => {
-  let sql023 = 'SELECT * FROM A3';
+  let sql023 = 'SELECT * FROM A4';
   let query023 = db023.query(sql023, (err023, records023) => {
     if(err023) {
       res023.statusCode = 400;
@@ -33,7 +33,7 @@ app023.get('/', (req023, res023) => {
 });
 
 app023.get('/:jobName023/:partId023', (req023, res023) => {
-  var sql023 = "SELECT * FROM A3 WHERE job_name = '" + req023.params.jobName023 + "' AND part_id = " + req023.params.partId023 + " LIMIT 1";
+  var sql023 = "SELECT * FROM A4 WHERE job_name = '" + req023.params.jobName023 + "' AND part_id = " + req023.params.partId023 + " LIMIT 1";
   let query023 = db023.query(sql023, (err023, record023) => {
     if(err023 || record023.length === 0) {
       res023.statusCode = 400;
@@ -46,7 +46,7 @@ app023.get('/:jobName023/:partId023', (req023, res023) => {
 
 app023.post('/', (req023, res023) => {
 
-  var sql023 = "INSERT INTO A3 VALUES('" + req023.body.jobName023 + "', " + req023.body.partId023 + ", " + req023.body.qty023 + ")";
+  var sql023 = "INSERT INTO A4 VALUES('" + req023.body.jobName023 + "', " + req023.body.partId023 + ", " + req023.body.qty023 + ")";
   let query023 = db023.query(sql023, (err023, result023) => {
     if(err023) {
       res023.statusCode = 400;
@@ -59,7 +59,7 @@ app023.post('/', (req023, res023) => {
 
 app023.put('/', (req023, res023) => {
 
-  var sql023 = "UPDATE A3 SET quantity = " + req023.body.qty023 + " WHERE job_name = '" + req023.body.jobName023 + "' AND part_id = " + req023.body.partId023;
+  var sql023 = "UPDATE A4 SET quantity = " + req023.body.qty023 + " WHERE job_name = '" + req023.body.jobName023 + "' AND part_id = " + req023.body.partId023;
   let query = db023.query(sql023, (err, result) => {
     if(err) {
       res023.statusCode = 400;
