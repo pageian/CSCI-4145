@@ -6,15 +6,17 @@
     <table>
         <thread>
             <tr>
+                <th>Job Name </th>
                 <th>Part ID </th>
-                <th>Part Name </th>
+                <th>Qty </th>
             </tr>
         </thread>
         <tbody>
-            <% parts.forEach(function(part){ %>
+            <% data023.forEach(function(record023){ %>
                 <tr>
-                    <td> <%= part.id %> </td>
-                    <td> <%= part.name %> </td>
+                    <td> <%= record023.jobName023 %> </td>
+                    <td> <%= record023.partId023 %> </td>
+                    <td> <%= record023.qty023 %> </td>
                 </tr>
             <% }) %>
         </tbody>
@@ -26,6 +28,6 @@
 </form>
 <br>
 
-<form action="/addData">
+<form action="/addData023">
     <button> Add Data </button>
 </form>
