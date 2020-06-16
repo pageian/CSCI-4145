@@ -53,7 +53,7 @@ module.exports = {
     }
   },
   
-  viewData : function(req, res) {
+  viewData: function(req, res) {
     if(!parts) {
       res.send("Cannot find anything to show!")
     }
@@ -62,7 +62,7 @@ module.exports = {
     }
   },
   
-  addData : function(req, res) {
+  addData: function(req, res) {
     var flag = 0;
     for(var i = 0; i<parts.length; i++) {
       if(parts[i].id == parseInt(req.body.id)) {
