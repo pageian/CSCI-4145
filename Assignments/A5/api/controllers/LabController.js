@@ -1,8 +1,41 @@
-let data023 = [
-    {jobName023: "Job1023", partId023: 1023, qty023: 55},
-    {jobName023: "Job2023", partId023: 2023, qty023: 100},
-    {jobName023: "Job3023", partId023: 3023, qty023: 200}
-]
+var Waterline = require('waterline');
+var sailsMysqlAdapter = require('sails-mysql');
+
+var waterline = new Waterline();
+var data023 = Waterline.Collection.extend({
+    identity: 'record',
+    datastore: 'default',
+    primaryKey: 'id',
+
+    attributes: {
+        id: {
+            type: 'number',
+            autoMigrations: {autoIncrement: true}
+        },
+        jobName023: {type:'string'},
+        partId023: {type:'number'},
+        qty023: {type:'number'},
+    }
+});
+
+waterline.registerModel(data023);
+
+var config = {
+    adapters: {
+      'mysql': sailsMysqlAdapter
+    },
+  
+    datastores: {
+      default: {
+        adapter: 'mysql'
+      }
+    }
+  };
+// let data023 = [
+//     {jobName023: "Job1023", partId023: 1023, qty023: 55},
+//     {jobName023: "Job2023", partId023: 2023, qty023: 100},
+//     {jobName023: "Job3023", partId023: 3023, qty023: 200}
+// ]
   
 module.exports = {
 
